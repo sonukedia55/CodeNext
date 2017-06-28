@@ -1,6 +1,5 @@
-# Create a Cool Mail Layout Using PHP
-
-
+# Create a Cool Mail Layout Using PHP 
+Watch Full Tutorial   :   https://www.youtube.com/watch?v=WqXsmRDvngI&t=29s
   <br><br>
   <p align="center">
   <img height="300px" src="https://github.com/sonukedia55/CodeNext/blob/master/PhpMail/aa.png"/>

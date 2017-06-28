@@ -5,7 +5,14 @@
   </head>
   <body>
     <div class="header">
-      <div
+      <div class="title">
+        Smart Shop
+      </div>
+    </div>
+    <div class="bar1">
+      <div class="heading">
+        .
+      </div>
     </div>
   </body>
 </HTML>

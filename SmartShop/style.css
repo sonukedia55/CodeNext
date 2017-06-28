@@ -1,0 +1,25 @@
+*{
+  margin:0px;
+  font-family: sans-serif;
+}
+.header{
+  width: 98%;
+  height: 80px;
+  padding: 1%;
+  background-color: #195A79;
+  text-align: left;
+}
+.title{
+  width: 80%;
+  font-size: 50px;
+  color: white;
+  padding: 10px;
+  float: left;
+}
+.bar1{
+  margin-top: 1px;
+  background-color: #1C8D6C;
+  width:98%;
+  padding: 1%;
+  height: 50px;
+}

@@ -1,5 +1,6 @@
 # Create a Cool Mail Layout Using PHP 
-Watch Full Tutorial   :   https://www.youtube.com/watch?v=WqXsmRDvngI&t=29s
+<br>
+> Watch Full Tutorial   :   https://www.youtube.com/watch?v=WqXsmRDvngI&t=29s
   <br><br>
   <p align="center">
   <img height="300px" src="https://github.com/sonukedia55/CodeNext/blob/master/PhpMail/aa.png"/>
@@ -22,10 +23,10 @@ Watch Full Tutorial   :   https://www.youtube.com/watch?v=WqXsmRDvngI&t=29s
 Swift Mailer is a component based mailing solution for PHP 5.
 It is released under the MIT license.
 
-Homepage:      http://swiftmailer.org
-Documentation: http://swiftmailer.org/docs
-Bugs:          https://github.com/swiftmailer/swiftmailer/issues
-Repository:    https://github.com/swiftmailer/swiftmailer
+Homepage:      http://swiftmailer.org <br>
+Documentation: http://swiftmailer.org/docs <br>
+Bugs:          https://github.com/swiftmailer/swiftmailer/issues <br>
+Repository:    https://github.com/swiftmailer/swiftmailer <br>
 
 Swift Mailer is highly object-oriented by design and lends itself
 to use in complex web application with a great deal of flexibility.

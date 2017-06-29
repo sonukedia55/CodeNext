@@ -99,3 +99,82 @@
 #menubutton:hover{
   cursor:pointer;
 }
+.left{
+  width: 50%;
+  float: left;
+}
+.right{
+  width: 40%;
+  margin-left: 10%;
+  float: left;
+  min-height: 400px;
+}
+#formname{
+  height:40px;
+  width:250px;
+  background-color: #F1F1F1;
+  color: #37A160;
+  border: solid 3px #5A5A5A;
+  border-radius: 5%;
+  margin: 10px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+}
+#formname:focus{
+  border: solid 3px #37A160;
+  border-radius: 5%;
+  outline: none;
+}
+#formsubmit{
+  height:60px;
+  width:420px;
+  background-color: #39AB7C  ;
+  color: white;
+  border: solid 1px #5A5A5A;
+  border-radius: 3%;
+  margin: 30px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+}
+#formsubmit:hover{
+  background-color:#04603E;
+  border-radius: 5%;
+  outline: none;
+}
+#itemname{
+  font-size:20px;
+  color:green;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#singleprice{
+  font-size:15px;
+  color:grey;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#totalprice{
+  font-size:20px;
+  color:black;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#formremove{
+  height:40px;
+  width:100px;
+  background-color: #C66A7C;
+  color: white;
+  border: solid 1px #5A5A5A;
+  border-radius: 3%;
+  margin-left: 10px
+  font-size: 15px;
+  font-weight: bold;
+  padding: 5px;
+}
+#formremove:hover{
+  background-color:maroon;
+  border-radius: 5%;
+  outline: none;
+}

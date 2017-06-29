@@ -37,7 +37,7 @@
         if(a==1&&b==0){
           $('#menubutton').css({'transform': 'rotate(0deg)','transition' : 'all 0.4s ease-in-out'});
           $('.menubar').css({'transform':'translate(160px,30px) scale(0.1,1)','transition' : 'all 0.4s ease-in-out'});
-          //$('.menubar').hide(400);
+          $('.menubar').hide(400);
           a=0;b=1;
         }
 
@@ -71,7 +71,22 @@
     </div>
     <div class="body">
       <div class="filling">
-        Total Amount : Rs 500
+        <div class="left">
+          <h2>Enter Item : </h2>
+          <br>
+          <form >
+            <input type="text" id="formname" name="item" placeholder="Enter Name" />
+            <input type="text"  id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
+            <br><br>
+            <input type="submit" id="formsubmit" name="add" placeholder="Add" />
+          </form>
+      </div>
+      <div class="right">
+        <h3><u>Your List: </u></h3>
+        <br>
+        <h4><a id="itemname">Bornvita</a> 3 x<a id="singleprice">100</a><a id="totalprice"> 300</a> <input type="button" id="formremove" Value="Remove" /></h4>
+
+      </div>
       </div>
     </div>
   </body>

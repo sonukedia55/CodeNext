@@ -41,10 +41,20 @@
   height: 50px;
 }
 .heading{
-  float:right;
+  width: 20%;
+  float:left;
   color: white;
   margin-top: 10px;
   font-size: 20px;
+  height: 50px;
+}
+.headingleft{
+  width: 80%;
+  float:left;
+  color: white;
+  margin-top: 20px;
+  font-size: 20px;
+  height: 50px;
 }
 .body{
   background-color: #E4E5E5;

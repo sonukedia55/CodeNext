@@ -1,6 +1,62 @@
+<?php
+$new=1;
+$total=0;
+$id=0;
+	$con = mysqli_connect("localhost","root","","smartshop");
+  if(isset($_POST['add'])){
+    $new=0;
+    $id=$_POST['id'];
+    $name=$_POST['item'];
+    $count=$_POST['number'];
+    $ddf = mysqli_query($con, "SELECT  price,avaliable FROM items WHERE item='$name'");
+  		{
+
+  		while($r = mysqli_fetch_array($ddf)){
+  			$price=$r['price'];
+        $ava=$r['avaliable'];
+
+        //$query = mysqli_query($con,"UPDATE count set id='$idd' WHERE id='$id'");
+  		}
+    }
+    $cost = $price*$count;
+    $query = mysqli_query($con,"INSERT into data values('','$id','$name','$count','$price','$cost')");
+
+  }
+  if(isset($_POST['newlist'])){
+    $new=0;
+
+    $ddf = mysqli_query($con, "SELECT  id FROM count");
+  		{
+
+  		while($r = mysqli_fetch_array($ddf)){
+  			$id=$r['id'];
+        $idd=$id+1;
+        $query = mysqli_query($con,"UPDATE count set id='$idd' WHERE id='$id'");
+
+  		}}}
+$result='';
+  if($id!=0){
+
+    $ddf = mysqli_query($con, "SELECT  item,piece,cost,price FROM data WHERE id='$id'");
+  		{
+      while($r = mysqli_fetch_array($ddf)){
+  			$item=$r['item'];
+        $piece=$r['piece'];
+        $cost=$r['cost'];
+        $price=$r['price'];
+        $total+=$cost;
+        $result.='<textarea type="text" id="itemname" cols="20" rows="2" disabled>'.$item.'</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >'.$piece.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x '.$price.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>'.$cost.'</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>';
+
+  		}
+    }
+  }
+
+
+ ?>
 <!DOCTYPE html>
 <HTML>
   <head>
+    <title>Smart Shop</title>
     <link href="style.css"  rel="stylesheet" />
     <style>
     ::-webkit-scrollbar {
@@ -65,8 +121,11 @@
       </div>
     </div>
     <div class="bar1">
+      <div class="headingleft">
+        <?php if($new==1) echo '<form method="post" action="index.php"><input type="submit"  name="newlist" id="formremove" Value="Add List" /></form>';else echo  "List No.".$id;?>
+      </div>
       <div class="heading">
-        Total Amount : Rs 500
+        Total Amount : Rs <?php echo $total;?>
       </div>
     </div>
     <div class="body">
@@ -74,7 +133,8 @@
         <div class="left">
           <h2>Enter Item : </h2>
           <br>
-          <form >
+          <form method="post" action="index.php">
+            <input type="hidden" value="<?php echo $id?>" name="id"/>
             <input type="text" id="formname" name="item" placeholder="Enter Name" />
             <input type="text"  id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
             <br><br>
@@ -84,9 +144,7 @@
       <div class="right">
         <h3><u>Your List: </u></h3>
         <br>
-        <textarea type="text" id="itemname" cols="20" rows="2" disabled>bornvita</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >3</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x 100</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled> 300</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>
-        <textarea type="text" id="itemname" cols="20" rows="2" disabled>bornvita</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >3</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x 100</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled> 300</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>
-        </div>
+        <?php echo $result;?>        </div>
       </div>
     </div>
   </body>

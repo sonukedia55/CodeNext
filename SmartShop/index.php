@@ -8,20 +8,46 @@ $id=0;
     $id=$_POST['id'];
     $name=$_POST['item'];
     $count=$_POST['number'];
-    $ddf = mysqli_query($con, "SELECT  price,avaliable FROM items WHERE item='$name'");
+    $ddf = mysqli_query($con, "SELECT  id,price,avaliable FROM items WHERE item='$name'");
   		{
 
   		while($r = mysqli_fetch_array($ddf)){
   			$price=$r['price'];
         $ava=$r['avaliable'];
-
-        //$query = mysqli_query($con,"UPDATE count set id='$idd' WHERE id='$id'");
+        $pid= $r['id'];
+        $ava=$ava-$count;
+        $query = mysqli_query($con,"UPDATE items set avaliable='$ava' WHERE id='$pid'");
   		}
     }
     $cost = $price*$count;
     $query = mysqli_query($con,"INSERT into data values('','$id','$name','$count','$price','$cost')");
 
   }
+  if(isset($_POST['remove'])){
+    $new=0;
+    $id=$_POST['id'];
+    $id2=$_POST['id2'];
+
+    $query = mysqli_query($con,"DELETE  FROM data WHERE uid='$id2'");
+
+  }
+  if(isset($_POST['update'])){
+    $new=0;
+    $id=$_POST['id'];
+    $pp = $_POST['piece'];
+    $id2=$_POST['id2'];
+    $ddf = mysqli_query($con, "SELECT  price FROM data WHERE uid='$id2'");
+  		{
+
+  		while($r = mysqli_fetch_array($ddf)){
+  			$pp2=$r['price'];
+        $cst = $pp2*$pp;
+
+        $query = mysqli_query($con,"UPDATE data set piece='$pp',cost='$cst' WHERE uid='$id2'");
+  		}
+
+  }
+}
   if(isset($_POST['newlist'])){
     $new=0;
 
@@ -37,15 +63,17 @@ $id=0;
 $result='';
   if($id!=0){
 
-    $ddf = mysqli_query($con, "SELECT  item,piece,cost,price FROM data WHERE id='$id'");
+    $ddf = mysqli_query($con, "SELECT  uid,item,piece,cost,price FROM data WHERE id='$id'");
   		{
       while($r = mysqli_fetch_array($ddf)){
   			$item=$r['item'];
         $piece=$r['piece'];
         $cost=$r['cost'];
         $price=$r['price'];
+        $id2 = $r['uid'];
         $total+=$cost;
-        $result.='<textarea type="text" id="itemname" cols="20" rows="2" disabled>'.$item.'</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >'.$piece.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x '.$price.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>'.$cost.'</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>';
+        $result.='<form method="post" action="index.php" style="float:right;"><textarea type="text" id="itemname" cols="20" rows="2" disabled>'.$item.'</textarea> <textarea name="piece" type="text"  cols="3" rows="2" id="itemname" >'.$piece.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x '.$price.'</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>'.$cost.'</textarea>
+        <input type="hidden" value="'.$id2.'" name="id2"/><input type="hidden" value="'.$id.'" name="id"/> <input type="submit" id="formupdate" name="update" Value="Update" /> <input type="submit" id="formremove" name="remove" Value="Remove" /></form><br>';
 
   		}
     }

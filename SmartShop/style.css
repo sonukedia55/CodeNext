@@ -71,6 +71,7 @@
   color: #2D2D2D;
   font-size: 25px;
   text-align: center;
+  z-index: 1000;
 }
 .menubar ul{
   list-style-type:  none;
@@ -104,8 +105,8 @@
   float: left;
 }
 .right{
-  width: 40%;
-  margin-left: 10%;
+  width: 45%;
+  margin-left: 5%;
   float: left;
   min-height: 400px;
 }
@@ -144,10 +145,13 @@
   outline: none;
 }
 #itemname{
-  font-size:20px;
+  background-color: #EEEEEE;
+  outline: none;
+  border: none;
+  font-size:15px;
   color:green;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  resize: none;
 }
 #singleprice{
   font-size:15px;
@@ -163,7 +167,7 @@
 }
 #formremove{
   height:40px;
-  width:100px;
+  width:80px;
   background-color: #C66A7C;
   color: white;
   border: solid 1px #5A5A5A;
@@ -172,9 +176,29 @@
   font-size: 15px;
   font-weight: bold;
   padding: 5px;
+  transform: translateY(-15px);
 }
 #formremove:hover{
   background-color:maroon;
+  border-radius: 5%;
+  outline: none;
+}
+#formupdate{
+  height:40px;
+  width:80px;
+  background-color: #39AB7C;
+  color: white;
+  border: solid 1px #5A5A5A;
+  border-radius: 3%;
+  margin-left: 10px
+  font-size: 15px;
+  font-weight: bold;
+
+  padding: 5px;
+  transform: translateY(-15px);
+}
+#formupdate:hover{
+  background-color:green;
   border-radius: 5%;
   outline: none;
 }

@@ -84,9 +84,9 @@
       <div class="right">
         <h3><u>Your List: </u></h3>
         <br>
-        <h4><a id="itemname">Bornvita</a> 3 x<a id="singleprice">100</a><a id="totalprice"> 300</a> <input type="button" id="formremove" Value="Remove" /></h4>
-
-      </div>
+        <textarea type="text" id="itemname" cols="20" rows="2" disabled>bornvita</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >3</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x 100</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled> 300</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>
+        <textarea type="text" id="itemname" cols="20" rows="2" disabled>bornvita</textarea> <textarea type="text"  cols="3" rows="2" id="itemname" >3</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled>x 100</textarea><textarea type="text" id="itemname" cols="5" rows="2" disabled> 300</textarea> <input type="button" id="formupdate" Value="Update" /> <input type="button" id="formremove" Value="Remove" /><br>
+        </div>
       </div>
     </div>
   </body>

@@ -102,6 +102,9 @@
   padding-top: 5%;
   font-weight: bold;
 }
+.menubar a{
+
+}
 .menubar li:hover{
   background-color: #2D2D2D;
   color:white;
@@ -160,6 +163,17 @@
   border: none;
   font-size:15px;
   color:green;
+  text-align: center;
+  margin-left: 10px;
+  resize: none;
+}
+#itemhead{
+  background-color: white;
+  outline: none;
+  border: none;
+  font-size:15px;
+  color:green;
+  text-align: center;
   margin-left: 10px;
   resize: none;
 }

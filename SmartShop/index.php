@@ -23,6 +23,19 @@ $id=0;
     $query = mysqli_query($con,"INSERT into data values('','$id','$name','$count','$price','$cost')");
 
   }
+	if(isset($_POST['save'])){
+    $new=0;
+    $cid=$_POST['id'];
+    $total=$_POST['amount'];
+    $name=$_POST['cname'];
+		date_default_timezone_set('Asia/Kolkata');
+		$time = date('Y-m-d H:i:s');
+    $query = mysqli_query($con,"INSERT into user values('','$name','$cid','$total','$time')");
+		$query = mysqli_query($con,"DELETE  FROM error WHERE uid='$cid'");
+		$new=1;
+		$total=0;
+
+  }
   if(isset($_POST['remove'])){
     $new=0;
     $id=$_POST['id'];
@@ -59,7 +72,10 @@ $id=0;
         $idd=$id+1;
         $query = mysqli_query($con,"UPDATE count set id='$idd' WHERE id='$id'");
 
-  		}}}
+  		}}
+			$query = mysqli_query($con,"INSERT into error values('','$id')");
+
+		}
 $result='';
   if($id!=0){
 
@@ -133,11 +149,11 @@ $result='';
   <body>
     <div class="menubar">
       <ul>
-        <li>Home</li>
-        <li>Add Items</li>
-        <li>Edit Items</li>
-        <li>Help</li>
-        <li>Contact Us</li>
+				<a style="text-decoration:none;color: #2D2D2D;" href="index.php"><li>Home</li></a>
+				<a style="text-decoration:none;color: #2D2D2D;" href="edit.php"><li>Show Item</li></a>
+				<a style="text-decoration:none;color: #2D2D2D;" href="edit.php"><li >Edit Items</li></a>
+				<a style="text-decoration:none;color: #2D2D2D;" href="customers.php"><li>Customers</li></a>
+				<li>Contact Us</li>
       </ul>
     </div>
     <div class="header">
@@ -163,16 +179,28 @@ $result='';
           <br>
           <form method="post" action="index.php">
             <input type="hidden" value="<?php echo $id?>" name="id"/>
-            <input type="text" id="formname" name="item" placeholder="Enter Name" />
+            <input type="text" autofocus id="formname" name="item" placeholder="Enter Name" />
             <input type="text"  id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
             <br><br>
             <input type="submit" id="formsubmit" name="add" placeholder="Add" />
           </form>
       </div>
       <div class="right">
-        <h3><u>Your List: </u></h3>
-        <br>
-        <?php echo $result;?>        </div>
+
+
+        <?php
+				if($result){
+					echo
+					'<form method="post" action="index.php" style="float:right;">
+						<textarea type="text" id="itemname" cols="25" rows="2" name="cname" placeholder="Enter Customer name"></textarea>
+						<input type="hidden" value="'.$id.'" name="id"/><input type="hidden" value="'.$total.'" name="amount"/><input type="submit" id="formupdate" name="save" Value="Payment" />
+						</form><br>
+						 <h3><u>Your List: </u></h3>
+						 <br><br><br>';
+				}
+				echo $result;?>
+
+	     </div>
       </div>
     </div>
   </body>

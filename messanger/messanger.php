@@ -5,6 +5,14 @@ include 'session.php';
 $result = '<ul style="width:90%;">';
     $con = mysqli_connect('localhost','root','','messanger');
     $id = $_SESSION['id'];
+
+    if(isset($_POST['send'])){
+      $reci = 2;
+      $mess = $r['mess'];
+      $sqli= mysqli_query($con,"INSERT into messages values('','$id','$reci','$mess')");
+
+    }
+
     $df= mysqli_query($con,"SELECT sender,mess,reci FROM messages WHERE reci = '$id' OR sender ='$id' ORDER BY id DESC");
     {
         while($r = mysqli_fetch_array($df)){
@@ -53,15 +61,26 @@ $result.='</ul>';
 
   }
   </style>
+<script  type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+	$(function(){
+var auto_refresh = setInterval(
+function()
+{
+$('#msg_show').load('msg_ref.php');
+return false;}, 2000);
+});
+
+</script>
 </head>
 <body>
-  <div style="width:100%;float:left;min-height:400px;">
+  <div id="mes_show" style="width:100%;float:left;min-height:500px;">
 
     <?php echo $result;?>
  </div>
 
  <div style="width:100%;float:right;">
-   <form action="messanger.php" method="post">
+   <form align="right" action="messanger.php" method="post" style="width:100%;">
      <input type="text" autofocus name="mess" placeholder="Write message.."/>
      <input type="submit" name="send" value="Send"/>
    </form>

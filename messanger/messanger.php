@@ -2,18 +2,22 @@
 <?php
 include 'session.php';
 
-$result = '<ul style="width:90%;">';
+$result = '<ul reversed style="width:90%;">';
     $con = mysqli_connect('localhost','root','','messanger');
     $id = $_SESSION['id'];
 
     if(isset($_POST['send'])){
-      $reci = 2;
-      $mess = $r['mess'];
+      if($id==1)
+       $reci = 2;
+      else
+        $reci=1;
+
+      $mess = $_POST['mess'];
       $sqli= mysqli_query($con,"INSERT into messages values('','$id','$reci','$mess')");
 
     }
 
-    $df= mysqli_query($con,"SELECT sender,mess,reci FROM messages WHERE reci = '$id' OR sender ='$id' ORDER BY id DESC");
+    $df= mysqli_query($con,"SELECT sender,mess,reci FROM messages WHERE reci = '$id' OR sender ='$id' ORDER BY id DESC LIMIT 6");
     {
         while($r = mysqli_fetch_array($df)){
           if($r['sender']==$id){
@@ -28,6 +32,7 @@ $result = '<ul style="width:90%;">';
 $result.='</ul>';
 
  ?>
+ <!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -63,18 +68,15 @@ $result.='</ul>';
   </style>
 <script  type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript">
-	$(function(){
-var auto_refresh = setInterval(
-function()
-{
+
+var auto_refresh = setInterval(function(){
 $('#msg_show').load('msg_ref.php');
 return false;}, 2000);
-});
 
 </script>
 </head>
 <body>
-  <div id="mes_show" style="width:100%;float:left;min-height:500px;">
+  <div id="msg_show" style="width:100%;float:left;min-height:500px;">
 
     <?php echo $result;?>
  </div>

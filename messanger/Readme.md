@@ -1,7 +1,7 @@
 # Auto refresh Bubble chat with php
-
-<img src="ss.png" align="center" style="width:30%;"/>
-
+<p  align="center" style="width:30%;">
+<img src="ss.png" style="height:150px;"/>
+</p>
 ## Auto refresh with jquery.js
 
 > session to store id

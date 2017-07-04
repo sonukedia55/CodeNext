@@ -1,9 +1,11 @@
 # Auto refresh Bubble chat with php
+<br>
 <p  align="center" style="width:30%;">
 <img src="ss.png" style="height:150px;"/>
-</p>
-## Auto refresh with jquery.js
+</p><br>
 
-> session to store id
-> auto refresh a div with external php file
+** Auto refresh with jquery.js **
+
+> session to store id <br>
+> auto refresh a div with external php file<br>
 > sql to store messages

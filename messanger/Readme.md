@@ -1,5 +1,8 @@
 # Auto refresh Bubble chat with php
 <br>
+https://youtu.be/tyVTbMD97QY
+https://youtu.be/oNy80HekUhs
+<br>
 <p  align="center" style="width:30%;">
 <img src="ss.png" style="height:150px;"/>
 </p><br>

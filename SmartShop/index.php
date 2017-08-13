@@ -179,8 +179,8 @@ $result='';
           <br>
           <form method="post" action="index.php">
             <input type="hidden" value="<?php echo $id?>" name="id"/>
-            <input type="text" autofocus id="formname" name="item" placeholder="Enter Name" />
-            <input type="text"  id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
+            <input type="text" autocomplete="off" autofocus id="formname" name="item" placeholder="Enter Name" />
+            <input type="text" autocomplete="off" id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
             <br><br>
             <input type="submit" id="formsubmit" name="add" placeholder="Add" />
           </form>

@@ -4,6 +4,7 @@
   $result='';
   $total=0;
   $cname='';
+	$time='';
 
   if(isset($_POST['show'])){
     $id=$_POST['id'];

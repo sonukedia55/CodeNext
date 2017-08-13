@@ -112,6 +112,8 @@
 }
 #menubutton:hover{
   cursor:pointer;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
 }
 .left{
   width: 50%;

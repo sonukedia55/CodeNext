@@ -145,6 +145,56 @@ $result='';
 
     });
     </script>
+<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript">
+	$(function(){
+
+				var pr=-1;
+			 var cc = '';
+				$('#country_idd').fadeOut();
+
+			$('#formname').keyup(function(key) {
+
+				switch(parseInt(key.which,10)) {
+
+				case 38:
+				{
+					pr--;
+					cc = $('#go'+pr).val();
+					var pt = pr+1;
+					$('#go'+pt).css({'color':'#ffffff'});
+					 $('#go'+pr).css({'transform': 'rotate(90deg)','transition' : 'all 0.4s ease-in-out'});
+					$('#country_idd').val(cc);
+
+				}break;
+
+				case 40:
+				{
+					pr++;
+					var pt = pr-1;
+					$('#go'+pt).css({'color':'#ffffff'});
+					 $('#go'+pr).css({'transform': 'rotate(90deg)','transition' : 'all 0.4s ease-in-out'});
+					cc = $('#go'+pr).val();
+					$('#country_idd').val(cc);
+
+				}break;
+
+				case 13:
+					{
+						$('#formname').val(cc);
+						$('#country_idd').val('');
+						$('#country_list').fadeOut();
+						$('#country_idd').fadeOut();
+
+						cc='';
+						pr=-1;
+
+
+					}break;
+				}
+			});
+});
+</script>
   </head>
   <body>
     <div class="menubar">
@@ -179,7 +229,9 @@ $result='';
           <br>
           <form method="post" action="index.php">
             <input type="hidden" value="<?php echo $id?>" name="id"/>
-            <input type="text" autocomplete="off" autofocus id="formname" name="item" placeholder="Enter Name" />
+            <input type="text" autocomplete="off" autofocus id="formname" name="item" placeholder="Enter Name" onkeyup="autocomplet()"  />
+						<input type="text" autocomplete="off" id="country_idd" disabled/>
+      			<ul id="country_list"></ul>
             <input type="text" autocomplete="off" id = "formname" style="width:80px; margin-left:20px;" name="number" placeholder="Count" />
             <br><br>
             <input type="submit" id="formsubmit" name="add" placeholder="Add" />

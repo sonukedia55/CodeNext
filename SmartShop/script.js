@@ -1,7 +1,7 @@
 function autocomplet(){
 
   var min = 0;
-  var keyword = $('#country_id').val();
+  var keyword = $('#formname').val();
   if(keyword.length> min){
 
     $.ajax({

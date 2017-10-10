@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  *{
+    width: 100%;
+    margin: 0px;
+    padding:0px;
+    font-family: sans-serif;
+  }
+
+  #popup{
+    position:absolute;
+    width:40%;
+    margin: 100px 30%;
+    background-color:#34495e;
+    color:white;
+    display:none;
+    border-radius: 1%;
+  }
+  .imgcontainer{
+    width:100%;
+    text-align:right;
+    color:white;
+  }
+  .container{
+    width:100%;
+    padding:10%;
+  }
+  .container input{
+    width:80%;
+    height:30px;
+    border-radius:2%;
+    border:none;
+  }
+  #b1{
+    width: 50px;
+    background-color: grey;
+    color:white;
+    padding:10px;
+    padding-top: 5px;
+    cursor:pointer;
+  }
+  #b1:hover{
+    background-color: black;
+  }
+  #close{
+    padding: 0px 5px;
+    cursor: pointer;
+  }
+  #close:hover{
+    background-color: red;
+  }
+
+  </style>
+</head>
+<body>
+  <a onclick="document.getElementById('popup').style.display='block'" id="b1">Pop Up</a>
+<div id="popup">
+  <div class="imgcontainer">
+    <span id="close" onclick="document.getElementById('popup').style.display='none'" >&times;</span>
+  </div>
+  <div class="container" >
+    <form>
+      <label>Username</label><br>
+      <input type="text" placeholder="Enter username"/><br><br>
+      <label>Password</label><br>
+      <input type="password" placeholder="Enter password"/><br><br>
+      <input type="submit" value="Login" style="background-color:#00837c;"/><br><br>
+    </form>
+      <span><a>Forget password?</a></span>
+
+  </div>
+
+</div>
+</body>
+</html>

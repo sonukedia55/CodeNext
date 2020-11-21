@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Online Quiz</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+  .answerset li{
+    list-style:none;
+    line-height:30px;
+    decoration:none;
+  }
+  .cb{
+    margin: 0 10px 0;
+    transform: translateY(4px);
+    height: 16px;
+    width:40px;
+  }
+  .tarea{
+    width:80%
+    margin:20px 10% 20px 0
+    height:50px;
+  }
+  .rr{
+    color:red;
+  }
+  .ri{
+    color:green;
+  }
+  th{
+    background-color:lightblue;
+    text-align:center;
+  }
+  td{
+    text-align:center;
+  }
+</style>
+<body>
+
+<div class="container">
+  <h2>Question Set 1</h2>
+  <div class="well quest">
+    <h4>Q 1: How good is this</h4>
+    <h4>Ans:</h4>
+    <div class="panel answerset">
+      <ul>
+        <li><input type="checkbox" class="cb" name="" value="">A. Option 1</li>
+        <li><input type="checkbox" class="cb" name="" value="">B. Option 1</li>
+        <li><input type="checkbox" class="cb" name="" value="">C. Option 1</li>
+        <li><input type="checkbox" class="cb" name="" value="">D. Option 1</li>
+      <ul>
+    </div>
+    <hr>
+    <h4>Q 2: How good is this</h4>
+    <h4>Ans:</h4>
+    <div class="panel answerset">
+      <ul>
+        <li><input type="radio" name="aa" class="cb" value="">A. Option 1</li>
+        <li><input type="radio" name="aa" class="cb" value="">B. Option 1</li>
+        <li><input type="radio" name="aa" class="cb" value="">C. Option 1</li>
+        <li><input type="radio" name="aa" class="cb" value="">D. Option 1</li>
+      <ul>
+    </div>
+    <hr>
+    <h4>Q 3: How good is this</h4>
+    <h4>Ans:</h4>
+    <div class="panel answerset">
+      <ul>
+        <li><textarea class="form-control tarea" style="width:90%;margin:10px 0"  placeholder="Write answer here..."></textarea></li>
+      <ul>
+    </div>
+    <hr>
+    <div class="buttons text-center"><button class="btn btn-success" style="margin-right:10px;" name="button">Submit</button><button class="btn btn-danger" name="button">Reset</button></div>
+  </div>
+  <div class="panel-success answerset">
+    <h4><b>Result:</b> 10/15 (Passed)</h4>
+    <table class="table table-bordered">
+      <tr><th>Question</th><th>Status</th><th>Correct Answer</th><th>Marks</th><th>Students Accuracy</th></tr>
+      <tr><td>1.</td><td class="rr">Wrong</td><td>B</td><td>-0.25</td><td>98%</td></tr>
+      <tr><td>2.</td><td class="ri">Correct</td><td>B</td><td>+1</td><td>98%</td></tr>
+      <tr><td>3.</td><td class="ri">Correct</td><td>B</td><td>+1</td><td>98%</td></tr>
+      <tr><td>4.</td><td class="rr">Wrong</td><td>B</td><td>0</td><td>98%</td></tr>
+    </table>
+    <h5></h5>
+  </div>
+</div>
+
+</body>
+</html>

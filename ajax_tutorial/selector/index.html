@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+  <div class="container">
+    <br><br>
+    <div class="tabs">
+      <button class="btn btn-primary" onclick="filter('all')">All</button>
+      <button class="btn btn-primary" onclick="filter('animals')">Animals</button>
+      <button class="btn btn-primary" onclick="filter('birds')">Birds</button>
+      <button class="btn btn-primary" onclick="pg(-1)">Prev</button>
+      <button class="btn btn-primary" onclick="pg(1)">Next</button>
+    </div>
+    <br>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Name</th><th>Type</th></tr>
+      </thead>
+      <tbody id="filter">
+        <tr class="animals abc"><td>Shark</td><td>Animals</td></tr>
+        <tr class="animals abc"><td>Tiger</td><td>Animals</td></tr>
+        <tr class="birds abc"><td>Hen</td><td>Birds</td></tr>
+        <tr class="animals abc"><td>Snack</td><td>Animals</td></tr>
+        <tr class="animals abc"><td>Bear</td><td>Animals</td></tr>
+        <tr class="birds abc"><td>Crow</td><td>Birds</td></tr>
+        <tr class="birds abc"><td>Pigeon</td><td>Birds</td></tr>
+        <tr class="animals abc"><td>Dove</td><td>Animals</td></tr>
+        <tr class="birds abc"><td>Goose</td><td>Birds</td></tr>
+        <tr class="animals abc"><td>Lion</td><td>Animals</td></tr>
+        <tr class="birds abc"><td>Sparrow</td><td>Birds</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+
+function filter(cls){
+  if(cls=="all"){
+    $('.abc').show();
+  }else{
+    $('.abc').hide();
+    $(`.${cls}`).show();
+  }
+}
+
+var page = 1,perpage = 3,total = 11;
+
+function pagination(p){
+  $('.abc').hide();
+  var i = perpage*(p-1)+1;
+  var j = perpage*p;
+  if(j>total)j=total;
+  for(i;i<=j;i++){
+    //#filter tr:n-th-child(2)
+    $(`#filter tr:nth-child(${i})`).show();
+  }
+}
+
+function pg(p){
+  page += p;
+  if(page<1)page=1;
+  pagination(page);
+}
+
+pg(0);
+
+</script>
+</body>
+</html>

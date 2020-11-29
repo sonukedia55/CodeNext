@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  </head>
+  <body>
+    <style>
+      #todrag {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        color: white;
+        top: 0;
+        padding-top: 10px;
+        cursor: move;
+        left: 0;
+        user-select: none;
+        text-align: center;
+        background-color: red;
+      }
+      #todrag2 {
+
+        height: 100px;
+        width: 100px;
+        color: white;
+        top: 0;
+        padding-top: 10px;
+        cursor: move;
+        left: 200;
+        user-select: none;
+        text-align: center;
+        background-color: red;
+      }
+    </style>
+
+    <div id="todrag">
+      <p>Draggable</p>
+      <span id="xy">OK</span>
+    </div>
+
+    <div id="todrag2">
+      <p>Draggable</p>
+      <span id="xy">OK</span>
+    </div>
+
+    <script>
+
+    var isclick = 0;
+
+    function trigger(){
+      $(document).on('mousemove',function(event){
+        if(isclick){
+          $('#xy').html(event.pageX+" "+event.pageY);
+          $('#todrag').css({'top':event.pageY - $('#todrag').outerHeight() /2 ,'left':event.pageX - $('#todrag').outerWidth() /2});
+        }
+
+      })
+    }
+      $(document).ready(function(){
+        $('#todrag').on('mousedown',function(event){
+          isclick = 1;
+          trigger();
+        }).on('mouseup',function(){
+          isclick=0;
+        })
+
+        $('#todrag2').draggable();
+      })
+    </script>
+
+  </body>
+</html>

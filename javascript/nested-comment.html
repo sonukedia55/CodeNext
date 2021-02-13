@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+  .fa{
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .fa-reply{
+    color: blue;
+  }
+  .fa-heart{
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+  <div>
+    <div id="comments">
+    </div>
+  </div>
+
+</body>
+<script>
+
+let comments = [
+  {
+    'name' : '',
+    'message' : 'Leave a comment',
+    'like' : 0,
+    'id' : 1,
+    'pId' : null,
+    'child' :[
+    ]
+  }
+];
+
+let singleCard = (obj,padding)=> `<div style="padding:5px ${padding}px"><b>${obj.name}</b><br>${obj.message}<br><div id="d${obj.id}"></div><a onclick="addCommentInput(this)" data-action="reply" data-id="${obj.id}"><i class="fa fa-reply"></i>${obj.child.length}</a>&nbsp;<a onclick="addLikeClick(this)" data-id="${obj.id}"><i class="fa fa-heart"></i>${obj.like}</a></div>`
+
+function updateUI(node,p){
+  let ui = ""
+  p++;
+  for(let i of node){
+    ui+=singleCard(i,p*20);
+    if(i.child.length>0){
+      ui+=updateUI(i.child,p);
+    }
+  }
+  return ui;
+}
+
+function addComment(pId,node){
+  for(let i of node){
+    if(i.id == pId){
+      i.child.push({
+        'name' : document.getElementById(`nm_${pId}`).value,
+        'message' :document.getElementById(`msg_${pId}`).value,
+        'like' : 0,
+        'id' : (new Date()).getTime().toString().substr(0, 13),
+        'pId' : pId,
+        'child' :[]
+      })
+    }
+    if(i.child.length>0){
+      addComment(pId,i.child);
+    }
+  }
+  return
+}
+
+function addLike(pId,node){
+  for(let i of node){
+    if(i.id == pId){
+      i.like++;
+    }
+    if(i.child.length>0){
+      addLike(pId,i.child);
+    }
+  }
+  return
+}
+
+function addLikeClick(e){
+  let pId = e.getAttribute('data-id');
+  addLike(pId,comments);
+  document.getElementById('comments').innerHTML = updateUI(comments,0);
+}
+
+function addCommentInput(e){
+  let pId = e.getAttribute('data-id');
+  let elm = document.getElementById(`d${pId}`);
+  if(e.getAttribute('data-action') == "reply"){
+    let newDiv = document.createElement('div');
+    newDiv.innerHTML = `<input type="text" id="nm_${pId}" placeholder="Name"/><input type="text" id="msg_${pId}" placeholder="Comment"/>`;
+    elm.append(newDiv);
+    let newButton = document.createElement('button');
+    newButton.innerHTML = "Comment";
+    e.innerHTML = "";
+    e.setAttribute('data-action',"Comment");
+    e.append(newButton);
+  }else{
+    addComment(pId,comments);
+    document.getElementById('comments').innerHTML = updateUI(comments,0);
+  }
+}
+document.getElementById('comments').innerHTML = updateUI(comments,0);
+
+
+</script>
+
+</html>

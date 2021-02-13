@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <style>
+    tr{
+      cursor:move;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <br><br>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>Rank</th><th>Name</th><th>Type</th></tr>
+      </thead>
+      <tbody id="sortable" class="">
+        <tr><td>1</td><td>Shark</td><td>Animals</td></tr>
+        <tr><td>2</td><td>Tiger</td><td>Animals</td></tr>
+        <tr><td>3</td><td>Hen</td><td>Birds</td></tr>
+        <tr><td>4</td><td>Snack</td><td>Animals</td></tr>
+        <tr><td>5</td><td>Bear</td><td>Animals</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+<script>
+$( function() {
+  var c = {};
+  var iindex = 0;
+
+  $("#sortable tr").draggable({
+          helper: "clone",
+          start: function(event, ui) {
+              iindex = $(this).parent().children().index(this);
+              c.tr = this;
+              c.helper = ui.helper;
+          }
+  });
+
+  function swapElement(i,j){
+
+  }
+
+
+  $("#sortable tr").droppable({
+      drop: function(event, ui) {
+        console.log(iindex+1,event.target.rowIndex);
+        console.log($(`#sortable tr:nth-child(${iindex+1})`).html());
+    //    $(`#sortable tr:nth-child(${iindex})`).after($(`#sortable tr:nth-child(${event.target.rowIndex-1})`));
+        $(`#sortable tr:nth-child(${iindex + 1})`).replaceWith($(`#sortable tr:nth-child(${event.target.rowIndex})`).after($(`#sortable tr:nth-child(${iindex+1})`).clone(true)));
+        console.log(ui)
+        $(c.helper).remove();
+      }
+  });
+
+  $( "#sortable2" ).sortable();
+  $( "#sortable2" ).disableSelection();
+} );
+
+</script>
+</body>
+</html>

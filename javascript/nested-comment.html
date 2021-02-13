@@ -38,15 +38,43 @@ let comments = [
   }
 ];
 
-let singleCard = (obj,padding)=> `<div style="padding:5px ${padding}px"><b>${obj.name}</b><br>${obj.message}<br><div id="d${obj.id}"></div><a onclick="addCommentInput(this)" data-action="reply" data-id="${obj.id}"><i class="fa fa-reply"></i>${obj.child.length}</a>&nbsp;<a onclick="addLikeClick(this)" data-id="${obj.id}"><i class="fa fa-heart"></i>${obj.like}</a></div>`
+//let singleCard = (obj,padding)=> `<div style="padding:5px ${padding}px"><b>${obj.name}</b><br>${obj.message}<br><div id="d${obj.id}"></div><a onclick="addCommentInput(this)" data-action="reply" data-id="${obj.id}"><i class="fa fa-reply"></i>${obj.child.length}</a>&nbsp;<a onclick="addLikeClick(this)" data-id="${obj.id}"><i class="fa fa-heart"></i>${obj.like}</a></div>`
+
+let singleCardNew = (obj,padding) => {
+  let ndiv = document.createElement('div');
+  ndiv.style.padding =  `5px 10px`;
+  //ndiv.append(document.createElement('br'));
+  ndiv.innerHTML = `<b>${obj.name}</b><br>${obj.message}<br>`;
+  let formdiv = document.createElement('div');
+  formdiv.setAttribute('id',`d${obj.id}`);
+  ndiv.append(formdiv);
+  let aReply = document.createElement('a');
+  aReply.onclick = function () { addCommentInput(this);}
+  aReply.setAttribute('data-action','reply');
+  aReply.setAttribute('data-id',obj.id);
+  aReply.innerHTML = `<i class="fa fa-reply"></i>${obj.child.length}`;
+  ndiv.append(aReply);
+  let aLike = document.createElement('a');
+  aLike.onclick =function () {  addLikeClick(this);}
+  aLike.setAttribute('data-action','reply');
+  aLike.setAttribute('data-id',obj.id);
+  aLike.innerHTML = `<i class="fa fa-heart"></i>${obj.like}`;
+  ndiv.append(aLike);
+  return ndiv
+}
+
 
 function updateUI(node,p){
-  let ui = ""
   p++;
+  let ui = document.createElement('div');
+  ui.style.borderLeft = "solid 0.5px grey";
+  ui.style.margin = `5px ${30}px`;
+
   for(let i of node){
-    ui+=singleCard(i,p*20);
+  //  ui+=singleCard(i,p*20);
+    ui.append(singleCardNew(i,p*20));
     if(i.child.length>0){
-      ui+=updateUI(i.child,p);
+      ui.append(updateUI(i.child,p));
     }
   }
   return ui;
@@ -86,7 +114,9 @@ function addLike(pId,node){
 function addLikeClick(e){
   let pId = e.getAttribute('data-id');
   addLike(pId,comments);
-  document.getElementById('comments').innerHTML = updateUI(comments,0);
+  document.getElementById('comments').innerHTML = ""
+  document.getElementById('comments').append(updateUI(comments,0));
+//  document.getElementById('comments').innerHTML = updateUI(comments,0);
 }
 
 function addCommentInput(e){
@@ -103,10 +133,13 @@ function addCommentInput(e){
     e.append(newButton);
   }else{
     addComment(pId,comments);
-    document.getElementById('comments').innerHTML = updateUI(comments,0);
+    document.getElementById('comments').innerHTML = ""
+    document.getElementById('comments').append(updateUI(comments,0));
+  //  document.getElementById('comments').innerHTML = updateUI(comments,0);
   }
 }
-document.getElementById('comments').innerHTML = updateUI(comments,0);
+document.getElementById('comments').innerHTML = ""
+document.getElementById('comments').append(updateUI(comments,0));
 
 
 </script>

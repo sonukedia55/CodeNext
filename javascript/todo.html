@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+  .fa{
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .fa-close{
+    color: red;
+  }
+  .tdo{
+    width: 150px;
+    padding: 4px;
+    display: inline-block;
+    border-bottom: solid 0.5px lightgrey;
+  }
+  .stout{
+    text-decoration: line-through;
+  }
+</style>
+</head>
+<body>
+
+  <div>
+    <div id="todos">
+    </div>
+  </div>
+
+</body>
+<script>
+
+let todos = [
+  {
+    'todo' : 'Hey',
+    'id' : 33,
+    'status' : 0
+  }
+];
+
+function changeStatus(id,status){
+  for(let i=0;i<todos.length;i++){
+    if(todos[i].id == id){
+      console.log(i);
+      todos[i].status = status;
+    }
+  }
+  saveTodo();
+  return
+}
+
+function deleteTodo(e){
+  let pId = e.getAttribute('data-id');
+  for(let i=0;i<todos.length;i++){
+    if(todos[i].id == pId){
+      todos.splice(i,1);
+      saveTodo();
+      e.parentNode.parentNode.removeChild(e.parentNode);
+    }
+  }
+}
+
+function switchCheck(e){
+  let pId = e.getAttribute('data-id');
+  let elm = document.getElementById(`d${pId}`);
+  let elmTodo = e.parentNode.getElementsByClassName("tdo")[0];
+  console.log(elmTodo);
+  if(elmTodo.classList.contains("stout")){
+    elmTodo.classList.remove("stout");
+  }else{
+    elmTodo.classList.add("stout");
+  }
+  changeStatus(pId,e.checked);
+}
+
+let singleCard = (obj)=> `<div style="padding:10px;vertical-align:super;"><input onclick="switchCheck(this)" id="d${obj.id}" data-id="${obj.id}" type="checkbox" ${(obj.status?'checked':'')}>&nbsp;<span class="tdo${(obj.status?' stout':'')}">${obj.todo}</span>&nbsp;<a onclick="deleteTodo(this)" id="de${obj.id}" data-action="delete" data-id="${obj.id}"><i class="fa fa-close"></i></a><br></div>`
+
+
+let singleCardNew = (obj,padding) => {
+  let ndiv = document.createElement('div');
+  ndiv.style.padding =  `5px 10px`;
+  //ndiv.append(document.createElement('br'));
+
+  let checkBox = document.createElement('input');
+  checkBox.setAttribute('id',`d${obj.id}`);
+  checkBox.setAttribute('data-id',obj.id);
+  checkBox.setAttribute('type',`checkbox`);
+  checkBox.onchange = function() { console.log("Abc");switchCheck(this);}
+  if(obj.status)checkBox.checked = true;
+  ndiv.append(checkBox);
+
+  ndiv.innerHTML += `&nbsp;${obj.todo}&nbsp;`;
+
+  let aDelete = document.createElement('a');
+  aDelete.setAttribute('id',`de${obj.id}`);
+  aDelete.setAttribute('data-action','delete');
+  aDelete.setAttribute('data-id',obj.id);
+  aDelete.onclick = function() {  alert(this);}
+  aDelete.innerHTML = `<i class="fa fa-trash"></i>`;
+  ndiv.append(aDelete);
+
+  ndiv.innerHTML += `<br>`;
+
+  return ndiv
+}
+
+
+function updateUI(node,p){
+  p++;
+  let uihtml = "";
+  let ui = document.createElement('div');
+  ui.style.margin = `5px ${30}px`;
+
+  ui.innerHTML = `<input type="text" id="todoinput" style="margin-left:25px;"  /><i class="fa fa-plus" onclick="addTodo(this)" ></i><br>`;
+
+
+  for(let i of node){
+      uihtml+=singleCard(i);
+  //  ui.append(singleCardNew(i,p*20));
+  }
+  ui.innerHTML += uihtml;
+
+  return ui;
+}
+
+function addTodo(e){
+  todos.push({
+      'todo' : document.getElementById(`todoinput`).value,
+      'id' : (new Date()).getTime().toString().substr(0, 13),
+      'status' : 0
+    })
+  saveTodo();
+  document.getElementById('todos').innerHTML = ""
+  document.getElementById('todos').append(updateUI(todos,0));
+  return
+}
+
+function saveTodo(){
+  localStorage.setItem("todo",JSON.stringify(todos));
+}
+
+function loadJson(){
+  return new Promise((resolve)=>{
+    let lStore = localStorage.getItem("todo");
+    if(lStore){
+      todos = JSON.parse(lStore);
+      resolve()
+    }else{
+      fetch("https://sonukedia55.github.io/others/todoresponse.txt").then(res=>{
+        res.json().then(val=>{
+          console.log(val);
+          todos = val;
+          saveTodo();
+          resolve()
+        })
+      })
+    }
+  });
+}
+
+loadJson().then(()=>{
+  document.getElementById('todos').innerHTML = ""
+  document.getElementById('todos').append(updateUI(todos,0));
+})
+
+
+</script>
+
+</html>

@@ -15,10 +15,36 @@
     width: 150px;
     padding: 4px;
     display: inline-block;
-    border-bottom: solid 0.5px lightgrey;
   }
   .stout{
     text-decoration: line-through;
+  }
+  .todoelement{
+    font-family: arial;
+    margin: 1px;
+    width: 200px;
+    border: solid 0.5px lightgrey;
+    box-shadow: 1px 1px 3px lightgrey;
+  }
+  .todoelement span{
+    font-size: 13px;
+  }
+  .addtodo{
+    width: 218px;
+    box-shadow: 1px 1px 3px lightblue;
+    padding: 1px;
+    background-color: #2ac409;
+  }
+  .addtodo input{
+    width: 170px;
+  }
+  .addtodo .fa-plus{
+    width: 20px;
+    height: fit-content;
+    vertical-align: middle;
+    color: white;
+    margin: auto 3px;
+    text-align: center;
   }
 </style>
 </head>
@@ -67,33 +93,60 @@
       changeStatus(pId,e.checked);
     }
 
+    const deleteButton = ({id}) => {
+      let aDelete = document.createElement('a');
+      aDelete.setAttribute('id',`de${id}`);
+      aDelete.setAttribute('data-action','delete');
+      aDelete.onclick = deleteTodo.bind(aDelete);
+      aDelete.setAttribute('data-id',id);
+      aDelete.innerHTML = `<i class="fa fa-close"></i>`;
+      return aDelete;
+    }
 
-    let singleCardNew = (obj) => {
-      let ndiv = document.createElement('div');
-      ndiv.style.padding =  `10px`;
-      ndiv.style.verticalAlign =  `super`;
-
+    const checkBoxAdd = ({id,status}) => {
       let checkBox = document.createElement('input');
-      checkBox.setAttribute('id',`d${obj.id}`);
-      checkBox.setAttribute('data-id',obj.id);
+      checkBox.setAttribute('id',`d${id}`);
+      checkBox.setAttribute('data-id',id);
       checkBox.setAttribute('type',`checkbox`);
       checkBox.onchange = switchCheck.bind(checkBox);
-      if(obj.status)checkBox.checked = true;
-      ndiv.appendChild(checkBox);
+      if(status)checkBox.checked = true;
+      return checkBox;
+    }
 
+    const todoTextAdd = ({todo,status}) => {
       var aSpan = document.createElement('span');
-      aSpan.className = (`tdo${(obj.status?' stout':'')}`);
-      aSpan.textContent = obj.todo
-      ndiv.appendChild(aSpan);
+      aSpan.className = (`tdo${(status?' stout':'')}`);
+      aSpan.textContent = todo
+      return aSpan;
+    }
 
-      let aDelete = document.createElement('a');
-      aDelete.onclick = deleteTodo.bind(aDelete);
-      aDelete.setAttribute('id',`de${obj.id}`);
-      aDelete.setAttribute('data-action','delete');
-      aDelete.setAttribute('data-id',obj.id);
-      aDelete.innerHTML = `<i class="fa fa-close"></i>`;
-      ndiv.appendChild(aDelete);
+    const inputDiv = () => {
+      let inDiv = document.createElement('div');
+      inDiv.className = `addtodo`;
 
+      let inBox = document.createElement('input');
+      inBox.setAttribute('id',`todoinput`);
+      inBox.setAttribute('placeholder',`Enter todo`);
+      inBox.style.padding = `8px 5px`;
+      inDiv.appendChild(inBox);
+
+      let infa = document.createElement('i');
+      infa.className = "fa fa-plus";
+      infa.onclick = addTodo.bind(infa);
+      inDiv.appendChild(infa);
+      return inDiv;
+    }
+
+
+    let singleCard = (obj) => {
+      let ndiv = document.createElement('div');
+      ndiv.style.padding =  `10px`;
+      ndiv.className = "todoelement";
+      ndiv.style.verticalAlign =  `super`;
+
+      ndiv.appendChild(checkBoxAdd(obj));
+      ndiv.appendChild(todoTextAdd(obj));
+      ndiv.appendChild(deleteButton(obj));
       ndiv.appendChild(document.createElement('br'));
 
       return ndiv
@@ -106,20 +159,13 @@
       let uihtml = "";
       let ui = document.createElement('div');
       ui.style.margin = `5px ${30}px`;
+      ui.style.width = `220px`;
+      ui.style.boxShadow = '1px 1px 3px black';
 
-      let inBox = document.createElement('input');
-      inBox.setAttribute('id',`todoinput`);
-      inBox.style.marginLeft = `25px`;
-      ui.appendChild(inBox);
-
-      let infa = document.createElement('i');
-      infa.className = "fa fa-plus";
-      infa.onclick = addTodo.bind(infa);
-      ui.appendChild(infa);
-
+      ui.appendChild(inputDiv());
 
       for(let i of node){
-        ui.append(singleCardNew(i));
+        ui.append(singleCard(i));
       }
 
       return ui;

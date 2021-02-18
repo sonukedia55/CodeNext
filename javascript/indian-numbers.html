@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body style="margin:20px;">
+  <b>Indian Number System (to words) </b><br><br>
+  <input type="text" id="input" placeholder="Enter a number"/><button type="button" onclick="getWordsClick()">Convert</button>
+  <br><br>
+  <b>Output:</b><br>
+  <span id="output" style="color:blue;"></span>
+</body>
+<script type="text/javascript">
+
+// 1, 20 ,02 , 3 , 39
+
+
+function getWords(num){
+
+  if(num==0){return 'Zero'}
+
+  var tPlace = ['','Hundred','Thousand','Lakh','Crore','Arab','Karab']
+  var tDiv = [100,10,100,100,100,100,100,100];
+  var endPlace = ['Ninety','Eighty','Seventy','Sixty','Fifty','Fourty','Thirty','Twenty','Ten'];
+  var endTwenty = ['Nineteen','Eighteen','Seventeen','Sixteen','Fifteen','Fourteen','Thirteen','Twelve','Eleven']
+  var end = ['Nine','Eight','Seven','Six','Five','Four','Three','Two','One','']
+
+  function twoDigitName(val){
+    if(val<10){
+      return end[9-val]
+    }else if(val>10 && val<20){
+      val = val-10;
+      return endTwenty[9-val];
+    }else{
+      let rem = parseInt(val%10);
+      val = parseInt(val/10);
+      return (endPlace[9-val]+" "+end[9-rem]).trim();
+    }
+  }
+
+  let txt = [],final = []
+
+  if(num<0){num*=-1;final.push("Minus");}
+  let i = 0;
+  while(num>0){
+    if(i==tPlace.length){return "Too long number!"}
+    let rem = parseInt(num%tDiv[i]);
+    num = parseInt(num/tDiv[i]);
+    let digN = twoDigitName(rem);
+    txt = [...(digN.length>2?[digN]:[]),...(digN.length>2 && tPlace[i].length>2?[tPlace[i]+(rem==1?'':'s')]:[])].concat(txt);
+    i++;
+  }
+  return final.concat(txt).join(" ");
+}
+
+function getWordsClick(){
+  var no = document.getElementById('input').value;
+  document.getElementById('output').textContent = getWords(no);
+}
+
+
+
+
+
+</script>
+</html>

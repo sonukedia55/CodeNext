@@ -33,33 +33,28 @@
 <script>
 
 (function(){
-
-
     let todos = [];
 
+
     function changeStatus(id,status){
-      for(let i=0;i<todos.length;i++){
-        if(todos[i].id == id){
-          console.log(i);
-          todos[i].status = status;
-        }
-      }
+      //todos.filter(i=>{i.status = (i.id==id ? status : i.status);});
+      todos.forEach((i,ind)=>{console.log(ind);i.status = (i.id==id ? status : i.status);});
       saveTodo();
       return
     }
 
-    function deleteTodo(e){
+    function deleteTodo(evt){
+      const e =  evt.currentTarget
       let pId = e.getAttribute('data-id');
-      for(let i=0;i<todos.length;i++){
-        if(todos[i].id == pId){
-          todos.splice(i,1);
-          saveTodo();
-          e.parentNode.parentNode.removeChild(e.parentNode);
-        }
-      }
+
+      todos = todos.filter(i=>{return i.id != pId});
+      saveTodo();
+      console.log(todos);
+      e.parentNode.parentNode.removeChild(e.parentNode);
     }
 
-    function switchCheck(){
+    function switchCheck(evt){
+      const e =  evt.target
       let pId = e.getAttribute('data-id');
       let elm = document.getElementById(`d${pId}`);
       let elmTodo = e.parentNode.getElementsByClassName("tdo")[0];
@@ -72,43 +67,38 @@
       changeStatus(pId,e.checked);
     }
 
-    let singleCard = (obj)=> `<div style="padding:10px;vertical-align:super;"><input class="scheck" id="d${obj.id}" data-id="${obj.id}" type="checkbox" ${(obj.status?'checked':'')}>&nbsp;<span class="tdo${(obj.status?' stout':'')}">${obj.todo}</span>&nbsp;<a class="sdel" onclick="deleteTodo(this)" id="de${obj.id}" data-action="delete" data-id="${obj.id}"><i class="fa fa-close"></i></a><br></div>`
-
 
     let singleCardNew = (obj) => {
       let ndiv = document.createElement('div');
       ndiv.style.padding =  `10px`;
       ndiv.style.verticalAlign =  `super`;
-      //ndiv.append(document.createElement('br'));
 
       let checkBox = document.createElement('input');
       checkBox.setAttribute('id',`d${obj.id}`);
       checkBox.setAttribute('data-id',obj.id);
       checkBox.setAttribute('type',`checkbox`);
-      checkBox.onchange = function() { console.log("Abc");switchCheck(this);}
+      checkBox.onchange = switchCheck.bind(checkBox);
       if(obj.status)checkBox.checked = true;
-      ndiv.append(checkBox);
+      ndiv.appendChild(checkBox);
 
-      ndiv.innerHTML += `&nbsp;<span class="tdo${(obj.status?' stout':'')}">${obj.todo}</span>&nbsp;`;
+      var aSpan = document.createElement('span');
+      aSpan.className = (`tdo${(obj.status?' stout':'')}`);
+      aSpan.textContent = obj.todo
+      ndiv.appendChild(aSpan);
 
-      var aDelete = document.createElement('a');
-      aDelete.addEventListener("click",()=>{alert("A");})
+      let aDelete = document.createElement('a');
+      aDelete.onclick = deleteTodo.bind(aDelete);
       aDelete.setAttribute('id',`de${obj.id}`);
       aDelete.setAttribute('data-action','delete');
       aDelete.setAttribute('data-id',obj.id);
-      aDelete.classList.add("sdel");
       aDelete.innerHTML = `<i class="fa fa-close"></i>`;
-      ndiv.append(aDelete);
+      ndiv.appendChild(aDelete);
 
-      ndiv.innerHTML += `<br>`;
+      ndiv.appendChild(document.createElement('br'));
 
       return ndiv
     }
 
-    var elements = document.getElementsByClassName('sdel');
-    for (var i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', alert("Ab"), false);
-    }
 
 
     function updateUI(node,p){
@@ -117,19 +107,25 @@
       let ui = document.createElement('div');
       ui.style.margin = `5px ${30}px`;
 
-      ui.innerHTML = `<input type="text" id="todoinput" style="margin-left:25px;"  /><i class="fa fa-plus" onclick="addTodo(this)" ></i><br>`;
+      let inBox = document.createElement('input');
+      inBox.setAttribute('id',`todoinput`);
+      inBox.style.marginLeft = `25px`;
+      ui.appendChild(inBox);
+
+      let infa = document.createElement('i');
+      infa.className = "fa fa-plus";
+      infa.onclick = addTodo.bind(infa);
+      ui.appendChild(infa);
 
 
       for(let i of node){
-        //  uihtml+=singleCard(i);
         ui.append(singleCardNew(i));
       }
-      //ui.innerHTML += uihtml;
 
       return ui;
     }
 
-    function addTodo(e){
+    function addTodo(){
       todos.push({
           'todo' : document.getElementById(`todoinput`).value,
           'id' : (new Date()).getTime().toString().substr(0, 13),

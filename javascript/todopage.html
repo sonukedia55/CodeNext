@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+  .fa{
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .fa-close{
+    color: red;
+  }
+  .tdo{
+    width: 150px;
+    padding: 4px;
+    display: inline-block;
+  }
+  .stout{
+    text-decoration: line-through;
+  }
+  .todoelement{
+    font-family: arial;
+    margin: 1px;
+    width: 200px;
+    border: solid 0.5px lightgrey;
+    box-shadow: 1px 1px 3px lightgrey;
+  }
+  .todoelement span{
+    font-size: 13px;
+  }
+  .addtodo{
+    width: 218px;
+    box-shadow: 1px 1px 3px lightblue;
+    padding: 1px;
+    background-color: #2ac409;
+  }
+  .addtodo input{
+    width: 170px;
+  }
+  .addtodo .fa-plus{
+    width: 20px;
+    height: fit-content;
+    vertical-align: middle;
+    color: white;
+    margin: auto 3px;
+    text-align: center;
+  }
+  .header{
+    width: 100%;
+    /* height: 40px; */
+    box-shadow: 0px 1px 2px black;
+    text-align: right;
+    padding: 20px 0;
+    margin-bottom: 20px;
+  }
+  .header span{
+    margin: 5px 20px;
+    font-weight: bolder;
+  }
+  .container{
+    display: flex;
+  }
+  #notify div{
+    border: solid 0.5px lightblue;
+    padding: 15px 10px;
+    margin: 3px;
+    transition: all 1s ease-in-out;
+  }
+</style>
+</head>
+<body style="margin:0">
+
+  <div>
+    <div class="header">
+      <span id="status"></span>
+    </div>
+
+    <div class="container">
+      <div id="todos">
+      </div>
+
+      <div id="notify">
+      </div>
+  </div>
+  </div>
+
+</body>
+<script>
+
+(function(){
+    let todos = [];
+
+    function addNotification(text){
+      let newNotify = document.createElement('div');
+      newNotify.innerHTML = text;
+
+      let container = document.getElementById('notify');
+      container.insertBefore(newNotify, container.firstChild);
+      let childs = container.childNodes
+      if(childs.length>3){container.removeChild(container.lastChild);}
+    }
+
+
+    function changeStatus(id,status){
+      //todos.filter(i=>{i.status = (i.id==id ? status : i.status);});
+      let notifyText = ""
+      let notifyStatus = (status)?'completed':'pending';
+      todos.forEach((i,ind)=>{ if(i.id==id){i.status = status;notifyText = `${i.todo} is marked as ${notifyStatus}!`;} });
+      document.getElementById('status').textContent = `${(todos.filter(i=>{return i.status})).length} / ${todos.length}`
+      addNotification(notifyText);
+      saveTodo();
+      return
+    }
+
+    function deleteTodo(evt){
+      const e =  evt.currentTarget
+      let pId = e.getAttribute('data-id');
+
+      todos = todos.filter(i=>{return i.id != pId});
+      saveTodo();
+      console.log(todos);
+      e.parentNode.parentNode.removeChild(e.parentNode);
+    }
+
+    function switchCheck(evt){
+      const e =  evt.target
+      let pId = e.getAttribute('data-id');
+      let elm = document.getElementById(`d${pId}`);
+      let elmTodo = e.parentNode.getElementsByClassName("tdo")[0];
+      console.log(elmTodo);
+      if(elmTodo.classList.contains("stout")){
+        elmTodo.classList.remove("stout");
+      }else{
+        elmTodo.classList.add("stout");
+      }
+      changeStatus(pId,e.checked);
+    }
+
+    const deleteButton = ({id}) => {
+      let aDelete = document.createElement('a');
+      aDelete.setAttribute('id',`de${id}`);
+      aDelete.setAttribute('data-action','delete');
+      aDelete.onclick = deleteTodo.bind(aDelete);
+      aDelete.setAttribute('data-id',id);
+      aDelete.innerHTML = `<i class="fa fa-close">X</i>`;
+      return aDelete;
+    }
+
+    const checkBoxAdd = ({id,status}) => {
+      let checkBox = document.createElement('input');
+      checkBox.setAttribute('id',`d${id}`);
+      checkBox.setAttribute('data-id',id);
+      checkBox.setAttribute('type',`checkbox`);
+      checkBox.onchange = switchCheck.bind(checkBox);
+      if(status)checkBox.checked = true;
+      return checkBox;
+    }
+
+    const todoTextAdd = ({todo,status}) => {
+      var aSpan = document.createElement('span');
+      aSpan.className = (`tdo${(status?' stout':'')}`);
+      aSpan.textContent = todo
+      return aSpan;
+    }
+
+    const inputDiv = () => {
+      let inDiv = document.createElement('div');
+      inDiv.className = `addtodo`;
+
+      let inBox = document.createElement('input');
+      inBox.setAttribute('id',`todoinput`);
+      inBox.setAttribute('placeholder',`Enter todo`);
+      inBox.style.padding = `8px 5px`;
+      inDiv.appendChild(inBox);
+
+      let infa = document.createElement('i');
+      infa.className = "fa fa-plus";
+      infa.textContent = "+"
+      infa.onclick = addTodo.bind(infa);
+      inDiv.appendChild(infa);
+      return inDiv;
+    }
+
+
+    let singleCard = (obj) => {
+      let ndiv = document.createElement('div');
+      ndiv.style.padding =  `10px`;
+      ndiv.className = "todoelement";
+      ndiv.style.verticalAlign =  `super`;
+
+      ndiv.appendChild(checkBoxAdd(obj));
+      ndiv.appendChild(todoTextAdd(obj));
+      ndiv.appendChild(deleteButton(obj));
+      ndiv.appendChild(document.createElement('br'));
+
+      return ndiv
+    }
+
+    function updateUI(node,p){
+      p++;
+      let uihtml = "";
+      let ui = document.createElement('div');
+      ui.style.margin = `5px ${30}px`;
+      ui.style.width = `220px`;
+      ui.style.boxShadow = '1px 1px 3px black';
+
+      ui.appendChild(inputDiv());
+
+      for(let i of node){
+        ui.append(singleCard(i));
+      }
+
+      return ui;
+    }
+
+    function addTodo(){
+      todos.push({
+          'todo' : document.getElementById(`todoinput`).value,
+          'id' : (new Date()).getTime().toString().substr(0, 13),
+          'status' : 0
+        })
+      saveTodo();
+      document.getElementById('todos').innerHTML = ""
+      document.getElementById('todos').append(updateUI(todos,0));
+      return
+    }
+
+    function saveTodo(){
+      localStorage.setItem("todo",JSON.stringify(todos));
+    }
+
+    function loadJson(){
+      return new Promise((resolve)=>{
+        let lStore = localStorage.getItem("todo");
+        if(lStore){
+          todos = JSON.parse(lStore);
+          resolve()
+        }else{
+          fetch("https://sonukedia55.github.io/others/todoresponse.txt").then(res=>{
+            res.json().then(val=>{
+              console.log(val);
+              todos = val;
+              saveTodo();
+              resolve()
+            })
+          })
+        }
+      });
+    }
+
+    loadJson().then(()=>{
+      document.getElementById('todos').innerHTML = ""
+      document.getElementById('todos').append(updateUI(todos,0));
+      document.getElementById('status').textContent = `${(todos.filter(i=>{return i.status})).length} / ${todos.length}`
+    })
+
+}())
+
+
+</script>
+
+</html>

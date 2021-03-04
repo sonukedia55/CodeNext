@@ -3,9 +3,11 @@
     function createElement(type,classList,attr){
       let newEle = document.createElement(type);
       if(classList.length)newEle.className = classList.join(" ")
-      attr.forEach((item, i) => {
-        newEle.setAttribute(i,item[i]);
-      });
+      for(var k in attr){
+        if(typeof attr[k] != 'function'){
+          newEle.setAttribute(k,attr[k]);
+        }
+      }
       return newEle;
     }
 
@@ -16,11 +18,9 @@
 
 
     class EventEmitter {
-
         constructor() {
           this.events = {};
         }
-
         emit(eventName, data) {
           const event = this.events[eventName];
           if( event ) {
@@ -29,12 +29,10 @@
             });
           }
         }
-
         subscribe(eventName, fn) {
           if(!this.events[eventName]) {
             this.events[eventName] = [];
           }
-
           this.events[eventName].push(fn);
           return () => {
             this.events[eventName] = this.events[eventName].filter(eventFn => fn !== eventFn);

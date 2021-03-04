@@ -13,101 +13,64 @@
     function deleteTodo(evt){
       const e =  evt.currentTarget
       let pId = e.getAttribute('data-id');
-
       todos = todos.filter(i=>{return i.id != pId});
-      emitter.emit('todochanged', {todos: todos);
-      e.parentNode.parentNode.removeChild(e.parentNode);
+      emitter.emit('todochanged', {todos: todos});
     }
 
     function switchCheck(evt){
       const e =  evt.target
       let pId = e.getAttribute('data-id');
-      let elm = document.getElementById(`d${pId}`);
-      let elmTodo = e.parentNode.getElementsByClassName("tdo")[0];
-      console.log(elmTodo);
-      if(elmTodo.classList.contains("stout")){
-        elmTodo.classList.remove("stout");
-      }else{
-        elmTodo.classList.add("stout");
-      }
       changeStatus(pId,e.checked);
     }
 
 
     const deleteButton = ({id}) => {
-      let aDelete = document.createElement('a');
-      aDelete.setAttribute('id',`de${id}`);
-      aDelete.setAttribute('data-action','delete');
+      let aDelete = createElement('a',[],{'id':`d${id}`,'data-id':id,'data-action':'delete'});
       aDelete.onclick = deleteTodo.bind(aDelete);
-      aDelete.setAttribute('data-id',id);
       aDelete.innerHTML = `<i class="fa fa-close">X</i>`;
       return aDelete;
     }
 
     const checkBoxAdd = ({id,status}) => {
-      let checkBox = document.createElement('input');
-      checkBox.setAttribute('id',`d${id}`);
-      checkBox.setAttribute('data-id',id);
-      checkBox.setAttribute('type',`checkbox`);
+      let checkBox = createElement('input',[],{'id':`d${id}`,'data-id':id,'type':`checkbox`});
       checkBox.onchange = switchCheck.bind(checkBox);
       if(status)checkBox.checked = true;
       return checkBox;
     }
 
     const todoTextAdd = ({todo,status}) => {
-      var aSpan = document.createElement('span');
-      aSpan.className = (`tdo${(status?' stout':'')}`);
+      let aSpan = createElement('span',['tdo',...(status?['stout']:[])],{'id':`todoinput`,'placeholder':`Enter todo`});
       aSpan.textContent = todo
       return aSpan;
     }
 
     const inputDiv = () => {
-      let inDiv = document.createElement('div');
-      inDiv.className = `addtodo`;
-
-      let inBox = document.createElement('input');
-      inBox.setAttribute('id',`todoinput`);
-      inBox.setAttribute('placeholder',`Enter todo`);
-      inBox.style.padding = `8px 5px`;
-      inDiv.appendChild(inBox);
-
-      let infa = document.createElement('i');
-      infa.className = "fa fa-plus";
+      let inDiv = createElement('div',[`addtodo`],{});
+      let inBox = createElement('input',['inputbox'],{'id':`todoinput`,'placeholder':`Enter todo`});
+      let infa = createElement('i',['fa','fa-plus'],{});
       infa.textContent = "+"
       infa.onclick = addTodo.bind(inBox);
+      inDiv.appendChild(inBox);
       inDiv.appendChild(infa);
       return inDiv;
     }
 
 
     let singleCard = (obj) => {
-      let ndiv = document.createElement('div');
-      ndiv.style.padding =  `10px`;
-      ndiv.className = "todoelement";
-      ndiv.style.verticalAlign =  `super`;
-
+      let ndiv = createElement('div',['todoelement'],{'id':`todoinput`,'placeholder':`Enter todo`});
       ndiv.appendChild(checkBoxAdd(obj));
       ndiv.appendChild(todoTextAdd(obj));
       ndiv.appendChild(deleteButton(obj));
       ndiv.appendChild(document.createElement('br'));
-
       return ndiv
     }
 
-    function updateUI(node,p){
-      p++;
-      let uihtml = "";
-      let ui = document.createElement('div');
-      ui.style.margin = `5px ${30}px`;
-      ui.style.width = `220px`;
-      ui.style.boxShadow = '1px 1px 3px black';
-
+    function updateUI(node){
+      let ui = createElement('div',['uimain'],{});
       ui.appendChild(inputDiv());
-
       for(let i of node){
         ui.append(singleCard(i));
       }
-
       return ui;
     }
 
@@ -120,8 +83,6 @@
       emitter.emit('todochanged', {todos: todos});
       return
     }
-
-
 
     function loadJson(){
       return new Promise((resolve)=>{
@@ -149,5 +110,5 @@
     emitter.subscribe('todochanged', (data) => {
       saveTodo();
       document.getElementById('todos').innerHTML = ""
-      document.getElementById('todos').append(updateUI(data.todos,0));
+      document.getElementById('todos').append(updateUI(data.todos));
     });

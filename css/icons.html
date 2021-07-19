@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+  .container{
+    position: relative;
+    width: 30px;
+    margin: 5px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+  .vertical{
+    width: 4px;
+    height: 30px;
+    background-color: red;
+    position: absolute;
+    left: 13px;
+    transform: rotate(45deg);
+  }
+  .horizontal{
+    width: 30px;
+    height: 4px;
+    background-color: red;
+    position: absolute;
+    top: 13px;
+    transform: rotate(45deg);
+  }
+  .triangle{
+    width: 0px;
+    height: 0px;
+    border-top: solid 30px red;
+    border-left: solid 16px transparent;
+    border-right: solid 16px transparent;
+  }
+
+  .intriangle{
+    width: 0px;
+    height: 0px;
+    border-bottom: solid 30px red;
+    border-left: solid 16px transparent;
+    border-right: solid 16px transparent;
+  }
+
+  .twotriangle{
+    width: 0px;
+    height: 0px;
+    border-top: solid 16px red;
+    border-bottom: solid 16px red;
+    border-left: solid 15px transparent;
+    border-right: solid 15px transparent;
+  }
+  .parrgm{
+    width: 26px;
+    height: 30px;
+    background-color: red;
+    transform: skewX(330deg);
+  }
+  .circle{
+    width: 30px;
+    height: 30px;
+    border-radius:50%;
+    border:solid 4px red;
+  }
+</style>
+</head>
+<body>
+
+  <div style="display:flex">
+  <div class="container">
+     <div class="vertical"></div>
+     <div class="horizontal"></div>
+  </div>
+
+  <div class="container">
+     <div class="triangle"></div>
+  </div>
+
+  <div class="container">
+     <div class="intriangle"></div>
+  </div>
+
+  <div class="container">
+     <div class="twotriangle"></div>
+  </div>
+
+  <div class="container">
+     <div class="parrgm"></div>
+  </div>
+
+  <div class="container">
+     <div class="circle"></div>
+     <div class="circlein"></div>
+  </div>
+
+  </div>
+
+</body>
+
+</html>
